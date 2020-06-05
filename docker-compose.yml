@@ -31,8 +31,6 @@ services:
     command: bash -c 'serve -s build -l 3000'
     expose:
       - 3000
-    environment:
-      - REACT_APP_API_BASE_URL=http://localhost:81/v1/
     restart: always
 
   nginx_api:
