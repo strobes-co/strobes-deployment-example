@@ -1,0 +1,90 @@
+version: '2.0'
+services:
+  api:
+    image: docker.strobes.co/strobes-api:latest
+    depends_on:
+      - rabbitmq
+      - postgres
+    command:  sh start_api.sh
+    expose:
+      - 8000
+    env_file:
+      - .env
+    environment:
+      - CONTAINER=web
+    restart: always
+
+  celery:
+    image: docker.strobes.co/strobes-api:latest
+    command: sh start_celery.sh
+    depends_on:
+      - postgres
+      - rabbitmq
+    env_file:
+      - .env
+    environment:
+      - CONTAINER=celery
+    restart: always
+
+  frontend:
+    image: docker.strobes.co/strobes-fe:latest
+    command: bash -c 'serve -s build -l 3000'
+    expose:
+      - 3000
+    environment:
+      - REACT_APP_API_BASE_URL=http://localhost:81/v1/
+    restart: always
+
+  nginx_api:
+    image: docker.strobes.co/strobes-nginx:latest
+    ports:
+      - 81:81
+    environment:
+      - APP_SCHEME=http
+      - APP_HOSTNAME=api
+      - APP_PORT=8000
+      - NGNIX_PORT=81
+    depends_on:
+      - api
+
+  nginx_fe:
+    image: docker.strobes.co/strobes-nginx:latest
+    ports:
+      - 80:80
+    environment:
+      - APP_SCHEME=http
+      - APP_HOSTNAME=frontend
+      - APP_PORT=3000
+      - NGNIX_PORT=80
+    depends_on:
+      - frontend
+
+  postgres:
+    image:  postgres:10.5-alpine
+    expose:
+      - 5432
+    env_file:
+      - .env
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3.8.3-alpine
+    ports:
+      - "5672:5672"
+    labels:
+      NAME: rabbitmq
+    volumes:
+      - ./rabbitmq_config/:/etc/rabbitmq/
+      - rabbitmq_data:/var/lib/rabbitmq
+    expose:
+      - 5672
+    restart: always
+
+
+volumes:
+  postgresql_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
