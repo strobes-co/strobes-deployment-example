@@ -63,8 +63,6 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.8.3-alpine
-    ports:
-      - "5672:5672"
     labels:
       NAME: rabbitmq
     volumes:
