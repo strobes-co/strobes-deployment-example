@@ -99,6 +99,16 @@ services:
     env_file:
       - ./triangulum.env
     restart: always
+    
+    
+ watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/ubuntu/.docker/config.json:/config.json
+    command: --interval 30
+    environment:
+      - WATCHTOWER_CLEANUP=true
 
 
 volumes:
