@@ -1,4 +1,4 @@
-version: '2.0'
+version: '3.4'
 services:
   api:
     image: docker.strobes.co/strobes-api:latest
@@ -9,7 +9,7 @@ services:
     expose:
       - 8000
     env_file:
-      - .env
+      - ./api.env
     environment:
       - CONTAINER=web
     restart: always
@@ -21,7 +21,7 @@ services:
       - postgres
       - rabbitmq
     env_file:
-      - .env
+      - ./api.env
     environment:
       - CONTAINER=celery
     restart: always
@@ -29,24 +29,16 @@ services:
   frontend:
     image: docker.strobes.co/strobes-fe:latest
     command: bash -c 'serve -s build -l 3000'
-    ports:
-      - 3000:3000
     expose:
       - 3000
     restart: always
 
   nginx:
-    image: docker.strobes.co/strobes-nginx:latest
+    build: 
+      context: .
+      dockerfile: ./nginx/Dockerfile
     ports:
       - 80:80
-    environment:
-      - API_SCHEME=http
-      - API_HOSTNAME=api
-      - API_PORT=8000
-      - APP_SCHEME=http
-      - APP_HOSTNAME=frontend
-      - APP_PORT=3000
-      - NGINX_PORT=80
     depends_on:
       - api
       - frontend
@@ -56,7 +48,7 @@ services:
     expose:
       - 5432
     env_file:
-      - .env
+      - ./api.env
     volumes:
       - postgresql_data:/var/lib/postgresql/data
     restart: always
@@ -71,10 +63,53 @@ services:
     expose:
       - 5672
     restart: always
+    
+  elasticsearch:
+    image: elasticsearch:7.7.0
+    ports:
+      - 9200:9200
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+    restart: always
+  
+  logstash:
+    image: logstash:7.7.0
+    volumes:
+      - ./logstash/:/logstash/
+    command: logstash -f /logstash/logstash.conf
+    depends_on:
+      - elasticsearch
+    expose:
+      - 5959
+    restart: always
+  
+  triangulum:
+    image: docker.strobes.co/triangulum:latest
+    hostname: "triangulum"
+    expose:
+      - 50051
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - triangulum_output:/output/
+    depends_on:
+      - rabbitmq
+      - elasticsearch
+    env_file:
+      - ./triangulum.env
+    restart: always
 
 
 volumes:
   postgresql_data:
     driver: local
   rabbitmq_data:
+    driver: local
+  esdata:
+    driver: local
+  logstash_data:
+    driver: local
+  triangulum_output:
+    name: triangulum_output
     driver: local
