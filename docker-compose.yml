@@ -8,6 +8,8 @@ services:
     command:  sh start_api.sh
     expose:
       - 8000
+    volumes: 
+      - media_data:/usr/src/app/media/
     env_file:
       - ./api.env
     environment:
@@ -20,6 +22,8 @@ services:
     depends_on:
       - postgres
       - rabbitmq
+    volumes: 
+      - media_data:/usr/src/app/media/
     env_file:
       - ./api.env
     environment:
@@ -122,4 +126,6 @@ volumes:
     driver: local
   triangulum_output:
     name: triangulum_output
+    driver: local
+  media_data:
     driver: local
