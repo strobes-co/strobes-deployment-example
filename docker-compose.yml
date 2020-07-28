@@ -89,6 +89,17 @@ services:
       - 5959
     restart: always
   
+  rabbitmq_tri:
+    image: rabbitmq:3.8.3-alpine
+    labels:
+      NAME: rabbitmq_tri
+    volumes:
+      - ./rabbitmq_config/:/etc/rabbitmq/
+      - rabbitmq_tri_data:/var/lib/rabbitmq
+    expose:
+      - 5672
+    restart: always
+    
   triangulum:
     image: docker.strobes.co/triangulum:latest
     hostname: "triangulum"
@@ -123,6 +134,8 @@ volumes:
   esdata:
     driver: local
   logstash_data:
+    driver: local
+  rabbitmq_tri_data:
     driver: local
   triangulum_output:
     name: triangulum_output
