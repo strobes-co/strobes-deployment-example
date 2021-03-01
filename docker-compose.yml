@@ -20,11 +20,14 @@ services:
   celery:
     image: docker.strobes.co/strobes-api:latest
     command: sh start_celery.sh
+    expose:
+      - 5555
     depends_on:
       - postgres
       - rabbitmq
     volumes:
       - media_data:/usr/src/app/media/
+      - triangulum_artifacts:/artifacts/
     env_file:
       - ./api.env
     environment:
@@ -49,7 +52,7 @@ services:
       - frontend
 
   postgres:
-    image:  postgres:10.5-alpine
+    image:  postgres:11.10-alpine
     expose:
       - 5432
     env_file:
@@ -116,7 +119,6 @@ services:
     env_file:
       - ./triangulum.env
     restart: always
-
 
   watchtower:
     image: containrrr/watchtower
