@@ -19,25 +19,55 @@ git clone https://github.com/strobes-co/strobes-deployment-example.git
 - Create a env file  
 
 ```
-touch .env
+touch api.env
 ```
 
-- Copy the following content into .env by replacing required information
+- Copy the following content into api.env by replacing required information
 
 ```
-DEVELOPMENT=false
-SECRET_KEY=<replace_me>
-SQL_ENGINE=django.db.backends.postgresql_psycopg2
-SQL_HOST=postgres
-SQL_PORT=5432
-DATABASE=postgres
 POSTGRES_DB=strobes
 POSTGRES_USER=strobes
 POSTGRES_PASSWORD=<replace_me>
-DJANGO_SETTINGS_MODULE=strobesAPI.settings
-LICENCE_URL=https://<sls_api>
-LICENCE_KEY=<license_key>
-API_URL=<api_url>
+DEPLOYMENT_MODE=enterprise
+DEVELOPMENT=False
+SECRET_KEY=<replace_me>
+CONTAINER_URL=http://api:8000
+RABBITMQ_USERNAME=guest
+RABBITMQ_PASSWORD=
+RABBITMQ_HOST=rabbitmq
+RABBITMQ_PORT=5672
+TRIANGULUM_HOST=triangulum
+TRIANGULUM_PORT=50051
+TRIANGULUM_LOGS_INDEX=triangulum-logs
+ARTIFACTS_MOUNT=/artifacts/
+LICENSE_URL=https://license.strobes.co/api/license/validate/
+LICENSE_KEY=<license_key>
+PROD_POC=False
+PROD_POC_INTEL_URL=https://intel.strobes.co
+```
+
+```
+touch triangulum.env
+```
+
+- Copy the following content into triangulum.env by replacing required information
+
+```
+DOCKER_REGISTRY_USERNAME=AWS
+DOCKER_REGISTRY_PASSWORD=<license_key>
+DOCKER_REGISTRY_HOST=docker.strobes.co
+ES_HOST=http://<hostname>:9200/
+AWS_REGION=ap-south-1
+RABBITMQ_URL=amqp://guest@rabbitmq_tri:5672/
+MOUNT_PATH=triangulum_output
+CONTAINER_MOUNT=/output/
+RABBITMQ_HOST=rabbitmq_tri
+ES_LOGS_INDEX=triangulum-logs
+ARTIFACTS_MOUNT=/artifacts/
+ARTIFACTS_PATH=triangulum_artifacts
+PROD_POC=False
+DEVELOPMENT=False
+ORCHESTRATOR=docker 
 ```
 
 - Log into Docker private registry using license key
