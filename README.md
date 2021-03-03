@@ -51,24 +51,54 @@ touch triangulum.env
 ```
 
 - Copy the following content into triangulum.env by replacing required information
-
+    - incase of Orchestrator is docker 
 ```
-DOCKER_REGISTRY_USERNAME=AWS
-DOCKER_REGISTRY_PASSWORD=<license_key>
-DOCKER_REGISTRY_HOST=docker.strobes.co
-ES_HOST=http://<hostname>:9200/
-AWS_REGION=ap-south-1
-RABBITMQ_URL=amqp://guest@rabbitmq_tri:5672/
-MOUNT_PATH=triangulum_output
-CONTAINER_MOUNT=/output/
-RABBITMQ_HOST=rabbitmq_tri
-ES_LOGS_INDEX=triangulum-logs
-ARTIFACTS_MOUNT=/artifacts/
-ARTIFACTS_PATH=triangulum_artifacts
+ORCHESTRATOR=docker
 PROD_POC=False
 DEVELOPMENT=False
-ORCHESTRATOR=docker 
+ES_HOST=http://<es-host>:9200/
+DOCKER_REGISTRY_USERNAME=AWS
+DOCKER_REGISTRY_PASSWORD=<replace_me>
+DOCKER_REGISTRY_HOST=docker.strobes.co
+AWS_REGION=ap-south-1
+RABBITMQ_URL=amqp://guest@rabbitmq_tri:5672/
+MOUNT_PATH=/output/
+CONTAINER_MOUNT=/output/
+ARTIFACTS_MOUNT=/artifacts/
+RABBITMQ_HOST=rabbitmq_tri
+ES_LOGS_INDEX=triangulum-logs
+ARTIFACTS_PATH=/artifacts/
+SHARED_VOLUME_OUTPUT=triangulum_output
+SHARED_VOLUME_ARTIFACTS=triangulum_artifacts
+AWS_KEY=<replace_me>
+AWS_SECRET=<replace_me>
+AWS_ECS_CLUSTER=strobes-tasks-cluster
+ECS_TASK_SUBNETS=subnet-<replace_me>
+ECS_TASK_SECURITY_GROUPS=<replace_me> 
 ```
+  - incase of Orchestrator is ECS
+```
+ORCHESTRATOR=ECS
+PROD_POC=False
+DEVELOPMENT=False
+ES_HOST=http://<es-host>:9200/
+RABBITMQ_URL=amqp://guest@rabbitmq_tri:5672/
+RABBITMQ_HOST=rabbitmq_tri
+MOUNT_PATH=/efs/output/
+CONTAINER_MOUNT=/output/
+ARTIFACTS_MOUNT=/artifacts/
+ES_LOGS_INDEX=triangulum-logs
+ARTIFACTS_PATH=/efs/artifacts/
+DOCKER_REGISTRY_USERNAME=AWS
+DOCKER_REGISTRY_PASSWORD=<replace_me>
+DOCKER_REGISTRY_HOST=docker.strobes.co
+AWS_KEY=<replace_me>
+AWS_SECRET=<replace_me>
+AWS_REGION=ap-south-1
+AWS_ECS_CLUSTER=strobes-tasks-cluster
+ECS_TASK_SUBNETS=subnet-<replace_me>
+ECS_TASK_SECURITY_GROUPS=<replace_me>
+``` 
 
 - Log into Docker private registry using license key
 

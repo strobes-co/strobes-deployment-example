@@ -115,7 +115,6 @@ services:
       - triangulum_artifacts:/artifacts/
     depends_on:
       - rabbitmq
-      - elasticsearch
     env_file:
       - ./triangulum.env
     restart: always
