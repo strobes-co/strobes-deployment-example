@@ -1,7 +1,14 @@
 version: '3.4'
 services:
   api:
-    image: docker.strobes.co/strobes-api:latest
+    image: docker.strobes.co/strobes-api:v1.4
+      args:
+            - AWS_ACCESS_KEY=$AWS_ACCESS_KEY_ID
+            - AWS_SECRET_KEY=$AWS_SECRET_ACCESS_KEY
+            - AWS_REGION=ap-south-1
+            - CODEARTIFACT_REPO=$AWS_CODE_REPOSITORY
+            - CODEARTIFACT_DOMAIN=$AWS_DOMAIN
+            - CODEARTIFACT_DOMAIN_OWNER=$AWS_ACCOUNT_ID
     depends_on:
       - rabbitmq
       - postgres
@@ -18,7 +25,14 @@ services:
     restart: always
 
   celery:
-    image: docker.strobes.co/strobes-api:latest
+    image: docker.strobes.co/strobes-api:v1.4
+      args:
+            - AWS_ACCESS_KEY=$AWS_ACCESS_KEY_ID
+            - AWS_SECRET_KEY=$AWS_SECRET_ACCESS_KEY
+            - AWS_REGION=ap-south-1
+            - CODEARTIFACT_REPO=$AWS_CODE_REPOSITORY
+            - CODEARTIFACT_DOMAIN=$AWS_DOMAIN
+            - CODEARTIFACT_DOMAIN_OWNER=$AWS_ACCOUNT_ID
     command: sh start_celery.sh
     expose:
       - 5555
@@ -35,7 +49,7 @@ services:
     restart: always
 
   frontend:
-    image: docker.strobes.co/strobes-fe:latest
+    image: docker.strobes.co/strobes-fe:v1.4
     command: bash -c 'serve -s build -l 3000'
     expose:
       - 3000
@@ -82,15 +96,12 @@ services:
       - discovery.type=single-node
     restart: always
 
-  logstash:
-    image: logstash:7.7.0
+  fluentbit:
+    image: fluent/fluent-bit:1.5
     volumes:
-      - ./logstash/:/logstash/
-    command: logstash -f /logstash/logstash.conf
-    depends_on:
-      - elasticsearch
+      - ./fluent-bit/conf:/fluent-bit/etc
     expose:
-      - 5959
+      - 24224
     restart: always
 
   rabbitmq_tri:
@@ -105,7 +116,7 @@ services:
     restart: always
 
   triangulum:
-    image: docker.strobes.co/triangulum:latest
+    image: docker.strobes.co/triangulum:v1.2.1
     hostname: "triangulum"
     expose:
       - 50051
@@ -119,14 +130,14 @@ services:
       - ./triangulum.env
     restart: always
 
-  watchtower:
-    image: containrrr/watchtower
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /home/ubuntu/.docker/config.json:/config.json
-    command: --interval 30
-    environment:
-      - WATCHTOWER_CLEANUP=true
+  # watchtower:
+  #   image: containrrr/watchtower
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /home/ubuntu/.docker/config.json:/config.json
+  #   command: --interval 30
+  #   environment:
+  #     - WATCHTOWER_CLEANUP=true
 
 
 volumes:
@@ -135,8 +146,6 @@ volumes:
   rabbitmq_data:
     driver: local
   esdata:
-    driver: local
-  logstash_data:
     driver: local
   rabbitmq_tri_data:
     driver: local
