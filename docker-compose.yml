@@ -2,13 +2,6 @@ version: '3.4'
 services:
   api:
     image: docker.strobes.co/strobes-api:v1.4
-      args:
-            - AWS_ACCESS_KEY=$AWS_ACCESS_KEY_ID
-            - AWS_SECRET_KEY=$AWS_SECRET_ACCESS_KEY
-            - AWS_REGION=ap-south-1
-            - CODEARTIFACT_REPO=$AWS_CODE_REPOSITORY
-            - CODEARTIFACT_DOMAIN=$AWS_DOMAIN
-            - CODEARTIFACT_DOMAIN_OWNER=$AWS_ACCOUNT_ID
     depends_on:
       - rabbitmq
       - postgres
@@ -26,13 +19,6 @@ services:
 
   celery:
     image: docker.strobes.co/strobes-api:v1.4
-      args:
-            - AWS_ACCESS_KEY=$AWS_ACCESS_KEY_ID
-            - AWS_SECRET_KEY=$AWS_SECRET_ACCESS_KEY
-            - AWS_REGION=ap-south-1
-            - CODEARTIFACT_REPO=$AWS_CODE_REPOSITORY
-            - CODEARTIFACT_DOMAIN=$AWS_DOMAIN
-            - CODEARTIFACT_DOMAIN_OWNER=$AWS_ACCOUNT_ID
     command: sh start_celery.sh
     expose:
       - 5555
@@ -130,14 +116,14 @@ services:
       - ./triangulum.env
     restart: always
 
-  # watchtower:
-  #   image: containrrr/watchtower
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - /home/ubuntu/.docker/config.json:/config.json
-  #   command: --interval 30
-  #   environment:
-  #     - WATCHTOWER_CLEANUP=true
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/ubuntu/.docker/config.json:/config.json
+    command: --interval 30
+    environment:
+      - WATCHTOWER_CLEANUP=true
 
 
 volumes:
