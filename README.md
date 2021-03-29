@@ -19,6 +19,14 @@ This sample docker-compose will help you deploy the following services
 - FluendDB 
 - Elastic Search
 
+## Current Stable Release
+
+| Service Name  | Version |
+| ------------- | ------------- |
+| Frontend App | v1.4  |
+| API  | v1.4  |
+| Triangulum  | v1.3 |
+
 ## Deployment 
 
 To deploy the product you will be needing a license key, feel free to email us at akhil@wesecureapp.com to request one.
