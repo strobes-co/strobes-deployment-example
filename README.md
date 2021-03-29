@@ -1,14 +1,35 @@
-# Strobes Deployment Example
+# Strobes Deployment Tutorial
+
+**About Strobes**
+
+Strobes is a vulnerability management platform that integrates with different vulnerability scanners, threat intel platforms, and DevOps tools to help you in automating and priortising vulnerabilities in a faster yet organized way. 
+
+To know more about Strobes: https://strobes.co
+
+Request for a demo or trial: akhil@wesecureapp.com
 
 This sample docker-compose will help you deploy the following services
-- Strobes React Front App
-- Strobes Django API
-- Strobes Celery Worker
-- Nginx Reverse Proxy for Frontend and Backend
+- The Front End App
+- The Rest API
+- Celery Worker
+- Orchestrator for tasks (Triangulum)
+- Nginx 
 - Rabbitmq
 - Postgres
+- FluendDB 
+- Elastic Search
 
-## Deployment
+## Current Stable Release
+
+| Service Name  | Version |
+| ------------- | ------------- |
+| Frontend App | v1.4  |
+| API  | v1.4  |
+| Triangulum  | v1.3 |
+
+## Deployment 
+
+To deploy the product you will be needing a license key, feel free to email us at akhil@wesecureapp.com to request one.
 
 - Clone the repository or download a release from ```https://github.com/strobes-co/strobes-deployment-example/releases```
 
@@ -51,7 +72,7 @@ touch triangulum.env
 ```
 
 - Copy the following content into triangulum.env by replacing required information
-    - incase of Orchestrator is docker 
+
 ```
 ORCHESTRATOR=docker
 PROD_POC=False
@@ -117,33 +138,4 @@ docker-compose up -d
 To check if the services are up go to ```http://localhost```
 
 
-## Customization
 
-By default the API will running on port ```81``` and frontend on ```80```. To change the you can customize the docker-compose file by
-changing
-
-```
-  nginx_api:
-    image: docker.strobes.co/strobes-nginx:latest
-    ports:
-      - <port_run_api>:<port_run_api>
-    environment:
-      - APP_SCHEME=http
-      - APP_HOSTNAME=api
-      - APP_PORT=8000
-      - NGNIX_PORT=<port_run_api>
-    depends_on:
-      - api
-
-  nginx_fe:
-    image: docker.strobes.co/strobes-nginx:latest
-    ports:
-      - <port_run_fe>:<port_run_fe>
-    environment:
-      - APP_SCHEME=http
-      - APP_HOSTNAME=frontend
-      - APP_PORT=3000
-      - NGNIX_PORT=<port_run_fe>
-    depends_on:
-      - frontend
-```
