@@ -19,7 +19,7 @@ services:
 
   celery:
     image: docker.strobes.co/strobes-api:v1.4
-    command: sh start_celery.sh
+    command: ["bash","/usr/src/app/start_celery.sh"]
     expose:
       - 5555
     depends_on:
