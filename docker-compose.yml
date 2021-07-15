@@ -141,5 +141,5 @@ volumes:
   media_data:
     driver: local
   triangulum_artifacts:
-    name: triangulum_output
+    name: triangulum_artifacts
     driver: local
