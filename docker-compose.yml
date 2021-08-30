@@ -125,6 +125,12 @@ services:
     environment:
       - WATCHTOWER_CLEANUP=true
 
+  pgbouncer:
+    image: docker.strobes.co/pgbouncer:latest
+    env_file:
+     - ./pgbouncer.env
+    volumes:
+     - ./pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini
 
 volumes:
   postgresql_data:
