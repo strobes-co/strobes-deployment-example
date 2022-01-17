@@ -2,7 +2,7 @@
 
 **About Strobes**
 
-Strobes is a vulnerability management platform that integrates with different vulnerability scanners, threat intel platforms, and DevOps tools to help you in automating and priortising vulnerabilities in a faster yet organized way. 
+Strobes is a vulnerability management platform that integrates with different vulnerability scanners, threat intel platforms, and DevOps tools to help you in automating and priortising vulnerabilities in a faster yet organized way.
 
 To know more about Strobes: https://strobes.co
 
@@ -13,21 +13,21 @@ This sample docker-compose will help you deploy the following services
 - The Rest API
 - Celery Worker
 - Orchestrator for tasks (Triangulum)
-- Nginx 
+- Nginx
 - Rabbitmq
 - Postgres
-- FluendDB 
+- FluendDB
 - Elastic Search
 
 ## Current Stable Release
 
 | Service Name  | Version |
 | ------------- | ------------- |
-| Frontend App | v1.4  |
-| API  | v1.4  |
-| Triangulum  | v1.3 |
+| Frontend App | v1.3.3  |
+| API  | v2.4.7  |
+| Triangulum  | v1.3.0 |
 
-## Deployment 
+## Deployment
 
 To deploy the product you will be needing a license key, feel free to email us at akhil@wesecureapp.com to request one.
 
@@ -119,7 +119,7 @@ AWS_REGION=ap-south-1
 AWS_ECS_CLUSTER=strobes-tasks-cluster
 ECS_TASK_SUBNETS=subnet-<replace_me>
 ECS_TASK_SECURITY_GROUPS=<replace_me>
-``` 
+```
 
 - Log into Docker private registry using license key
 
@@ -136,6 +136,3 @@ docker-compose up -d
 ```
 
 To check if the services are up go to ```http://localhost```
-
-
-
