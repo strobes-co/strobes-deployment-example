@@ -35,7 +35,7 @@ services:
     restart: always
 
   frontend:
-    image: docker.strobes.co/strobes-fe:v1.3.3
+    image: docker.strobes.co/strobes-fe-v2:v1.3.3
     command: bash -c 'serve -s build -l 3000'
     expose:
       - 3000
