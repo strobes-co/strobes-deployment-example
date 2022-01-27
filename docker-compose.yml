@@ -80,6 +80,7 @@ services:
       - esdata:/usr/share/elasticsearch/data
     environment:
       - discovery.type=single-node
+      - thread_pool.search.queue_size=1000
     restart: always
 
   fluentbit:
