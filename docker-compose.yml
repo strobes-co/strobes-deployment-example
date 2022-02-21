@@ -62,7 +62,7 @@ services:
     restart: always
 
   rabbitmq:
-    image: rabbitmq:3.8.3-alpine
+    image: rabbitmq:3.8-management
     labels:
       NAME: rabbitmq
     volumes:
@@ -92,7 +92,7 @@ services:
     restart: always
 
   rabbitmq_tri:
-    image: rabbitmq:3.8.3-alpine
+    image: rabbitmq:3.8-management
     labels:
       NAME: rabbitmq_tri
     volumes:
