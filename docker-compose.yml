@@ -1,11 +1,11 @@
 version: '3.4'
 services:
   api:
-    image: docker.strobes.co/strobes-api:v2.4.7
+    image: docker.strobes.co/strobes-api:v2.5.75
     depends_on:
       - rabbitmq
       - postgres
-    command:  sh start_api.sh
+    command:  sh scripts/start_api.sh
     expose:
       - 8000
     volumes:
@@ -18,8 +18,8 @@ services:
     restart: always
 
   celery:
-    image: docker.strobes.co/strobes-api:v2.4.7
-    command: ["bash","/usr/src/app/start_celery.sh"]
+    image: docker.strobes.co/strobes-api:v2.5.75
+    command: ["bash","scripts/start_celery.sh"]
     expose:
       - 5555
     depends_on:
@@ -35,7 +35,7 @@ services:
     restart: always
 
   frontend:
-    image: docker.strobes.co/strobes-fe-v2:v1.3.3
+    image: docker.strobes.co/strobes-fe-v2:v1.3.44
     command: bash -c 'serve -s build -l 3000'
     expose:
       - 3000
@@ -103,7 +103,7 @@ services:
     restart: always
 
   triangulum:
-    image: docker.strobes.co/triangulum:v1.3.0
+    image: docker.strobes.co/triangulum:v1.4.7
     hostname: "triangulum"
     expose:
       - 50051
