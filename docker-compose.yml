@@ -10,6 +10,7 @@ services:
       - 8000
     volumes:
       - media_data:/usr/src/app/media/
+      - triangulum_output:/output/
       - triangulum_artifacts:/artifacts/
     env_file:
       - ./api.env
@@ -27,6 +28,7 @@ services:
       - rabbitmq
     volumes:
       - media_data:/usr/src/app/media/
+      - triangulum_output:/output/
       - triangulum_artifacts:/artifacts/
     env_file:
       - ./api.env
