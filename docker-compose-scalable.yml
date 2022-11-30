@@ -43,7 +43,6 @@ services:
   celery_beat:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
@@ -57,6 +56,10 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 4G
     env_file:
       - ./api.env
     environment:
@@ -68,6 +71,10 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
+    rdeploy:
+        resources:
+            limits:
+              memory: 4G
     env_file:
       - ./api.env
     environment:
@@ -79,6 +86,10 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 4G
     env_file:
       - ./api.env
     environment:
@@ -90,6 +101,10 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 512M
     env_file:
       - ./api.env
     environment:
@@ -101,6 +116,10 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 512M
     env_file:
       - ./api.env
     environment:
@@ -112,6 +131,10 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 512M
     env_file:
       - ./api.env
     environment:
@@ -123,6 +146,10 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 4G
     env_file:
       - ./api.env
     environment:
@@ -134,6 +161,10 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 512M
     env_file:
       - ./api.env
     environment:
@@ -145,6 +176,10 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 512M
     env_file:
       - ./api.env
     environment:
@@ -156,6 +191,10 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 512M
     env_file:
       - ./api.env
     environment:
@@ -167,6 +206,10 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 4G
     env_file:
       - ./api.env
     environment:
@@ -179,6 +222,10 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 4G
     env_file:
       - ./api.env
     environment:
@@ -225,6 +272,19 @@ services:
     environment:
       - discovery.type=single-node
     restart: always
+  
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --maxmemory 11145728000 --maxmemory-policy allkeys-lru
+    deploy:
+      resources:
+        limits:
+          memory: 12G
+    volumes:
+      - cache:/data
 
 volumes:
   postgresql_data:
