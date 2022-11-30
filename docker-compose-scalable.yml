@@ -29,7 +29,7 @@ services:
 
   api:
     image: *strobes-image
-    command: bash scripts/start_api.sh
+    command: sh scripts/start_api.sh
     expose:
       - 8000
     volumes: *strobes-volumes
@@ -43,8 +43,7 @@ services:
   celery_beat:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    expose:
-      - 5555
+    
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
@@ -56,8 +55,6 @@ services:
   celery_short_task_worker:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    expose:
-      - 5555
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
@@ -69,8 +66,6 @@ services:
   celery_long_task_worker:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    expose:
-      - 5555
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
@@ -82,8 +77,6 @@ services:
   celery_very_short_task_worker:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    expose:
-      - 5555
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
@@ -95,8 +88,6 @@ services:
   celery_cve_request_task_worker:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    expose:
-      - 5555
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
@@ -108,8 +99,6 @@ services:
   celery_priority_request_task_worker:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    expose:
-      - 5555
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
@@ -121,8 +110,6 @@ services:
   celery_onboarding_task_worker:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    expose:
-      - 5555
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
@@ -134,8 +121,6 @@ services:
   celery_parser_task_worker:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    expose:
-      - 5555
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
@@ -147,8 +132,6 @@ services:
   celery_notification_task_worker:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    expose:
-      - 5555
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
@@ -160,8 +143,6 @@ services:
   celery_dashboard_task_worker:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    expose:
-      - 5555
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
@@ -173,8 +154,6 @@ services:
   celery_tracker_task_worker:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    expose:
-      - 5555
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
@@ -186,8 +165,6 @@ services:
   celery_export_task_worker:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    expose:
-      - 5555
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
@@ -200,8 +177,6 @@ services:
   celery_bulk_actions_worker:
     image: *strobes-image
     command: bash scripts/start_celery.sh
-    expose:
-      - 5555
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
     env_file:
