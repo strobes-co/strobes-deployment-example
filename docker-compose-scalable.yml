@@ -298,3 +298,5 @@ volumes:
   triangulum_artifacts:
     name: triangulum_output
     driver: local
+  cache:
+    driver: local
