@@ -71,7 +71,7 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
-    rdeploy:
+    deploy:
         resources:
             limits:
               memory: 4G
