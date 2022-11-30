@@ -285,6 +285,14 @@ services:
           memory: 12G
     volumes:
       - cache:/data
+  
+  pgbouncer:
+    image: edoburu/pgbouncer
+    env_file:
+     - ./api.env
+    volumes:
+     - ./pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini
+    restart: always
 
 volumes:
   postgresql_data:
