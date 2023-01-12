@@ -131,10 +131,6 @@ services:
     command: bash scripts/start_celery.sh
     volumes: *strobes-volumes
     depends_on: *strobes-depends-on
-    deploy:
-        resources:
-            limits:
-              memory: 512M
     env_file:
       - ./api.env
     environment:
