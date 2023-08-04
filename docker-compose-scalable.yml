@@ -1,4 +1,4 @@
-x-strobes-image: &strobes-image docker.strobes.co/strobes-api:v2.7.15
+x-strobes-image: &strobes-image docker.strobes.co/strobes-api:v3.2.14
 x-strobes-depends-on: &strobes-depends-on
   - rabbitmq
   - postgres
@@ -10,8 +10,8 @@ x-strobes-volumes: &strobes-volumes
 version: '3.4'
 services:
   frontend:
-    image: docker.strobes.co/strobes-fe-v2:v1.5.12
-    command: bash -c 'serve -s build -l 3000'
+    image: docker.strobes.co/strobes-fe-v2:v3.2.16
+    command: ["nginx", "-g", "daemon off;"]
     expose:
       - 3000
     restart: always
