@@ -41,7 +41,7 @@ This sample docker-compose will help you deploy the following services
 
 To deploy the product you will be needing a license key, feel free to email us at akhil@wesecureapp.com to request one.
 
-- Clone the repository or download a release from ```https://github.com/strobes-co/strobes-deployment-example/releases```
+- Clone the repository ```https://github.com/strobes-co/strobes-deployment-example/releases```
 
 ```
 git clone https://github.com/strobes-co/strobes-deployment-example.git
@@ -63,6 +63,18 @@ LICENSE_KEY=<replace me>
 
 ```
 
+- Open the pgbouncer.env
+
+```
+nano pgbouncer.env
+```
+
+- update the DB_PASSWORD variable with postgres password set in api.env
+
+```
+DB_PASSWORD=<replace me>
+```
+
 For external file system (optional)
 ```
 S3_BUCKET_NAME=<replace me>
@@ -81,7 +93,7 @@ nano triangulum.env
 - update the below variables with their appropriate values in triangulum.env
 
 ```
-DOCKER_REGISTRY_PASSWORD=<replace me>
+DOCKER_REGISTRY_PASSWORD=<replace me with license key>
 ```
 
 - incase of Orchestrator is ECS
