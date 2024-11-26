@@ -308,7 +308,7 @@ services:
     restart: always
 
   triangulum:
-    image: docker.strobes.co/triangulum:v4.6.0
+    image: docker.strobes.co/triangulum:v4.8.2
     hostname: "triangulum"
     expose:
       - 50051
