@@ -1,4 +1,4 @@
-x-strobes-image: &strobes-image docker.strobes.co/strobes-api:v3.88.7
+x-strobes-image: &strobes-image docker.strobes.co/strobes-api:v3.90.0
 x-strobes-depends-on: &strobes-depends-on
   - rabbitmq
   - postgres
@@ -349,6 +349,38 @@ services:
       - 5672
     restart: always
 
+  strobes_intel:
+    image: docker.strobes.co/strobes-intel-airgapped:latest
+    container_name: "strobes_intel_api"
+    ports:
+      - 8001:8000
+    volumes:
+      - ./license_keys/:/usr/src/app/license_keys/
+    environment:
+      - DEPLOY=api
+    env_file:
+      - ./airgapped-intel-api.env
+    restart: always
+  
+  mongo:
+    image: "mongo:5.0.6-focal"
+    container_name: "mongo"
+    labels:
+      NAME: "mongo"
+    ports:
+      - 0.0.0.0:27017:27017
+    expose:
+      - 27017
+    restart: always
+    volumes:
+      - ./configs/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+    env_file:
+      - ./airgapped-intel-api.env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: threat_intel
+
 volumes:
   postgresql_data:
     driver: local
@@ -367,4 +399,6 @@ volumes:
     name: triangulum_output
     driver: local
   rabbitmq_tri_data:
+    driver: local
+  mongo_data:
     driver: local

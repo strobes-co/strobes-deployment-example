@@ -35,7 +35,7 @@ This sample docker-compose will help you deploy the following services
 | ------------- | ------------- |
 | Frontend App | v3.67.2  |
 | API  | v3.69.4  |
-| Triangulum  | v4.8.2 |
+| Triangulum  | v5.1.1 |
 
 ## Deployment
 
@@ -60,6 +60,13 @@ POSTGRES_PASSWORD=<replace me>
 SECRET_KEY=<replace me>
 SMTP_PASSWORD=<replace me>
 LICENSE_KEY=<replace me>
+
+```
+
+- Update the below value to True if your environment do not have access to the Internet post deployment
+
+```
+AIR_GAPPED_LICENSE=False 
 
 ```
 
