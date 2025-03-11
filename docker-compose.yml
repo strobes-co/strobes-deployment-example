@@ -1,4 +1,4 @@
-x-strobes-image: &strobes-image docker.strobes.co/strobes-api:v3.88.7
+x-strobes-image: &strobes-image docker.strobes.co/strobes-api:v3.90.0
 x-strobes-depends-on: &strobes-depends-on
   - rabbitmq
   - postgres
