@@ -260,6 +260,35 @@ services:
       - CONTAINER=celery_listener_task_worker
     restart: always
 
+  celery_automation_action_worker:
+    image: *strobes-image
+    command: bash scripts/start_celery.sh
+    volumes: *strobes-volumes
+    depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 2G
+    env_file:
+      - ./api.env
+    environment:
+      - CONTAINER=celery_automation_action_worker
+    restart: always
+
+  celery_automation_trigger_worker:
+    image: *strobes-image
+    command: bash scripts/start_celery.sh
+    volumes: *strobes-volumes
+    depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 2G
+    env_file:
+      - ./api.env
+    environment:
+      - CONTAINER=celery_automation_trigger_worker
+    restart: always
 
   postgres:
     image: postgres:11.10-alpine
