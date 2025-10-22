@@ -33,9 +33,9 @@ This sample docker-compose will help you deploy the following services
 
 | Service Name  | Version |
 | ------------- | ------------- |
-| Frontend App | v3.82.6  |
-| API  | v3.90.0  |
-| Triangulum  | v5.1.1 |
+| Frontend App | v3.109.0  |
+| API  | v3.114.0  |
+| Triangulum  | v5.6.2 |
 
 ## Deployment
 
