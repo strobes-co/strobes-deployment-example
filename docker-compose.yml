@@ -1,4 +1,4 @@
-x-strobes-image: &strobes-image docker.strobes.co/strobes-api:v3.114.0
+x-strobes-image: &strobes-image docker.strobes.co/strobes-api:v3.143.13
 x-strobes-depends-on: &strobes-depends-on
   - rabbitmq
   - postgres
@@ -10,16 +10,18 @@ x-strobes-volumes: &strobes-volumes
 version: '3.4'
 services:
   frontend:
-    image: docker.strobes.co/strobes-fe-v2:v3.109.0
-    command: ["nginx", "-g", "daemon off;"]
-    expose:
-      - 3000
-    restart: always
+    image: docker.strobes.co/strobes-fe-v2:v3.138.09
+    command: ["sh", "-c", "cp -rf /usr/src/app/build/. /build/"]
+    volumes:
+      - frontend_build:/build
+    restart: on-failure
 
   nginx:
     build:
       context: .
       dockerfile: ./nginx/Dockerfile
+    volumes:
+      - frontend_build:/usr/share/nginx/html:ro
     ports:
       - 80:80
     depends_on:
@@ -28,7 +30,7 @@ services:
 
   api:
     image: *strobes-image
-    command: sh scripts/start_api.sh
+    command: python manage.py runserver 0.0.0.0:8000
     expose:
       - 8000
     volumes: *strobes-volumes
@@ -336,7 +338,7 @@ services:
     restart: always
 
   postgres:
-    image: postgres:11.10-alpine
+    image: postgres:15-alpine
     expose:
       - 5432
     command: postgres -c max_connections=1200 -c shared_buffers=4GB -c effective_cache_size=12GB -c maintenance_work_mem=1GB -c checkpoint_completion_target=0.9 -c wal_buffers=16MB -c default_statistics_target=100 -c random_page_cost=1.1 -c effective_io_concurrency=200 -c work_mem=1747kB -c min_wal_size=1GB -c max_wal_size=4GB -c max_worker_processes=4 -c max_parallel_workers_per_gather=2 -c max_parallel_workers=4 -c max_parallel_maintenance_workers=2
@@ -441,4 +443,6 @@ volumes:
     name: triangulum_output
     driver: local
   rabbitmq_tri_data:
+    driver: local
+  frontend_build:
     driver: local
