@@ -157,6 +157,21 @@ services:
       - CONTAINER=celery_notification_task_worker
     restart: always
 
+  celery_onboarding_task_worker:
+    image: *strobes-image
+    command: bash scripts/start_celery.sh
+    volumes: *strobes-volumes
+    depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 4G
+    env_file:
+      - ./api.env
+    environment:
+      - CONTAINER=celery_onboarding_task_worker
+    restart: always
+
   celery_status_task_worker:
     image: *strobes-image
     command: bash scripts/start_celery.sh
@@ -290,6 +305,21 @@ services:
       - ./api.env
     environment:
       - CONTAINER=celery_automation_trigger_worker
+    restart: always
+
+  celery_dashboard_export_worker:
+    image: *strobes-image
+    command: bash scripts/start_celery.sh
+    volumes: *strobes-volumes
+    depends_on: *strobes-depends-on
+    deploy:
+        resources:
+            limits:
+              memory: 2G
+    env_file:
+      - ./api.env
+    environment:
+      - CONTAINER=celery_dashboard_export_worker
     restart: always
 
   celery_short_task_worker_asm:
